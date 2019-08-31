@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+		<script src="https://www.gstatic.com/firebasejs/6.4.2/firebase-app.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/6.4.2/firebase-firestore.js"></script>
+		
+	<link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+		<h1>Cloud Cafe</h1>
+
+        <div class="content">
+
+            <form id="add-cafe-form">
+              <input type="text" name="name" placeholder="cafe">
+              <input type="text" name="city" placeholder="city">
+              <button class="submit">submit</button>
+            </form>
+
+            <ul id="cafe-list"></ul>
+
+        </div>
+<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#config-web-app -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyB1wQPRf2S0b6Z8GCxHDVOnra43bTGRr48",
+    authDomain: "cdrhack-ecfab.firebaseapp.com",
+    databaseURL: "https://cdrhack-ecfab.firebaseio.com",
+    projectId: "cdrhack-ecfab",
+    storageBucket: "cdrhack-ecfab.appspot.com",
+    messagingSenderId: "152196614868",
+    appId: "1:152196614868:web:0b68fe951618b75a"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+  
+</script>
+
+<script>
+	var percent = new Array();
+	var dis = new Array();
+
+db.collection('pie').get().then((snapshot) => {
+snapshot.docs.forEach(doc => {   
+	percent.push(doc.data().per);
+	dis.push(doc.data().disease);
+})
+})
+
+
+console.log(dis);
+
+
+
+</script>
+
+<script>
+		window.onload = function() {
+
+			console.log(percent);
+		
+		var chart = new CanvasJS.Chart("chartContainer", {
+			animationEnabled: true,
+			title: {
+				text: "Desktop Search Engine Market Share - 2016"
+			},
+			data: [{
+				type: "pie",
+				startAngle: 240,
+				yValueFormatString: "##0.00\"%\"",
+				indexLabel: "{label} {y}",
+				dataPoints: [
+	
+					{y: percent[0], label: dis[0]},
+					{y: percent[1], label: dis[1]},
+					{y: percent[2], label: dis[2]}
+				
+				]
+			}]
+		});
+		chart.render();
+		
+		}
+		</script>
+
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+</body>
+</html>

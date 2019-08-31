@@ -1,0 +1,187 @@
+
+<!-- saved from url=(0062)file:///C:/Users/Devansh%20Bhushan/Desktop/informant-form.html -->
+<html><head>
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.5.0/firebase-firestore.js"></script>
+    
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  <link rel="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js">
+<link rel="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js">
+
+
+    <title>HealthFirst</title>
+	
+	
+	<style type="text/CSS">
+	body{
+	background-size:100% 100%;
+	background-color:
+	}
+	
+	
+	input[type=text], select {
+  width: 350px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+ 
+form{
+   padding-left:70px;
+   padding-top:30px;
+   width:450px;
+   margin-left:540px;
+   background-color:beige;
+   color:black;
+   margin-top:20px;
+  
+   
+   }
+ #form-instructions{
+     
+     text-align:center;
+	 font-family:sans-serif;
+	 border-top:2px solid grey;
+	 border-bottom:2px solid grey;
+     padding-bottom:20px;
+ 
+ 
+ }
+ .punjab-logo{
+ float:left;
+ padding-top:20px;
+ padding-left:20px;
+ }
+    
+	
+	
+	</style>
+</head>
+
+<script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyB1wQPRf2S0b6Z8GCxHDVOnra43bTGRr48",
+      authDomain: "cdrhack-ecfab.firebaseapp.com",
+      databaseURL: "https://cdrhack-ecfab.firebaseio.com",
+      projectId: "cdrhack-ecfab",
+      storageBucket: "cdrhack-ecfab.appspot.com",
+      messagingSenderId: "152196614868",
+      appId: "1:152196614868:web:0b68fe951618b75a"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    db.settings({timestampsInSnapshots:true});
+  </script>
+
+<body>
+<div id="logos">
+<img class="punjab-logo" src="file:///C:/Users/Devansh%20Bhushan/Desktop/logopb.svg" width="150px" height="150px">
+<img class="punjab-logo" src="file:///C:/Users/Devansh%20Bhushan/Desktop/mother-child-logo.webp" width="150px" height="150px">
+</div>
+<div id="form-instructions">
+
+<h3>Instructions:</h3>
+1.To be filled by the primary informant<br>
+2.two copies should br filled incase of CBCDR(one to be submitted to ANM and one handed over to the family).<br>
+3.For FBCDR only one copy needs to be filled and handed over to FNO.<br>
+4.If the notification card is already filled,address the bereavement issues,offer support and leave(CBCDR only).<br>
+5.Write in capital letters.<br>
+6.Circle the appropriate response (or) place a (tick) wherever applicable.<br>
+
+</div>
+<form>
+Your name<br>
+<input type="text" name="Patient1&#39;s name"><br><br>
+Patient's address<br>
+<input type="text" name="address1"><br><br>
+Mother's name<br>
+<input type="text" name="Patient2&#39;s name"><br><br>
+Father's name<br>
+<input type="text" name="address2"><br><br>
+House number<br>
+<input type="text" name="Patient3&#39;s name"><br><br>
+Village/Town/City<br>
+<input type="text" name="address3"><br><br>
+Mohalla/Colony<br>
+<input type="text" name="address4"><br><br>
+Block<br>
+<input type="text" name="address5"><br><br>
+District/tehsil<br>
+<input type="text" name="address6"><br><br>
+State<br>
+<input type="text" name="address7"><br><br>
+Pincode<br>
+<input type="text" name="address8"><br><br>
+Patient's date of birth<br>
+
+
+  <input type="date" name="bday">
+  
+
+
+<div class="form-check" style="padding-top:2rem">
+  Sex:
+  <div class="form-check">
+  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+  <label class="form-check-label" for="exampleRadios1">
+    Male
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+  <label class="form-check-label" for="exampleRadios2">
+    Female
+  </label>
+</div>
+<div class="form-check">
+  <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+  <label class="form-check-label" for="exampleRadios2">
+    Others
+  </label>Submit
+
+
+</div>
+<button id="submit-button">Submit</button>
+</div></form>
+  <script>
+  const cafeList = document.querySelector('#cafe-list');
+const form = document.querySelector('#add-cafe-form');
+ function render(doc){
+     let liName = document.createElement('li');
+     let nameName= document.createElement('span');
+     
+     let cityName = document.createElement('span');
+     liName.setAttribute('date-id',doc.id);
+     nameName.textContent= doc.data().name;
+     cityName.textContent= doc.data().city;
+     liName.appendChild(nameName);
+     liName.appendChild(cityName);
+     cafeList.appendChild(liName);
+ }
+
+
+db.collection('docForm').get().then((snapshot) => {
+snapshot.docs.forEach(doc => {   
+    render(doc);
+})
+})
+form.addEventListener('submit',(e)=>
+{
+    e.preventDefault();
+    db.collection('docForm').add({
+        name: form.name.value,
+        city: form.city.value
+    })
+    form.name.value='';
+    form.city.value='';
+})
+  </script>
+</body>
+</html>
