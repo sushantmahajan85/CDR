@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>LOGIN</title>
+<link href="css/style.css" rel='stylesheet' type='text/css' />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- <meta name="keywords" content="Login , registration, forgot password "./> -->
+		<link href='http://fonts.googleapis.com/css?family=Cabin:400,500,600,700,400italic,500italic,600italic,700italic' rel='stylesheet' type='text/css'>
+</head>
+<body>
+<!--/start-login-one-->
+	<div class="login-01">
+		<div class="one-login  hvr-float-shadow">
+			<div class="one-login-head">
+					<img src="images/top-lock.png" alt=""/>
+					<h1>LOGIN</h1>
+					<span></span>
+			</div>
+			<form>
+				<li>
+					<input type="text" class="text" id="mail" value="Username">
+				</li>
+				<li>
+					<input type="password" value="Password" id="pass">
+				</li>
+				<!-- <div class="p-container">
+						<label class="checkbox"><input type="checkbox" name="checkbox" checked><i></i>Remember Me</label>
+						<h6><a href="ACCOUNT-RESET.html">Forgot Password ?</a> </h6>
+							<div class="clear"> </div> 
+				</div> -->
+				
+						<button onclick="accountCreate()">LOGIN</button>
+				
+				</form>
+		</div>
+	</div>
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/6.4.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.4.2/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.4.2/firebase-firestore.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#config-web-app -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyB1wQPRf2S0b6Z8GCxHDVOnra43bTGRr48",
+    authDomain: "cdrhack-ecfab.firebaseapp.com",
+    databaseURL: "https://cdrhack-ecfab.firebaseio.com",
+    projectId: "cdrhack-ecfab",
+    appId: "1:152196614868:web:0b68fe951618b75a"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  const auth = firebase.auth();
+
+  auth.onAuthStateChanged(user =>{
+
+      if(user){
+
+        console.log("User Logged In !!!", user)
+      } else {
+
+        console.log("User Logged Out !!!")
+      }
+
+  })
+
+  function accountCreate(){
+
+        userMail = document.getElementById("mail").value;
+        userPass = document.getElementById("pass").value;
+
+        auth.createUserWithEmailAndPassword(userMail, userPass).then(cred =>{
+
+          console.log(cred)
+
+          document.getElementById("mail").innerText="";
+          document.getElementById("pass").innerText="";
+
+        })
+  }
+
+  function signIn(){
+
+    userMail = document.getElementById("mail").value;
+    userPass = document.getElementById("pass").value;
+
+    auth.signInWithEmailAndPassword(userMail, userPass).then(cred =>{
+
+      console.log("Logged In !!!")
+
+    document.getElementById("mail").innerText="";
+    document.getElementById("pass").innerText="";
+
+})
+}
+
+  function logOut(){
+
+    auth.signOut().then(cred =>{
+
+    //console.log("Logged Out !!!")
+
+})
+}
+
+</script>
+
+</body>
+</html>

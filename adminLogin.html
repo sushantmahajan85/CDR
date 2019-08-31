@@ -36,12 +36,12 @@
 					</span>
 
 					<div class="wrap-input100 validate-input m-b-16" data-validate="Please enter username">
-						<input class="input100" type="text" name="username" placeholder="Username">
+						<input class="input100" type="text" name="username" id="mail" placeholder="Username">
 						<span class="focus-input100"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate = "Please enter password">
-						<input class="input100" type="password" name="pass" placeholder="Password">
+						<input class="input100" type="password" name="pword" id="pass" placeholder="Password">
 						<span class="focus-input100"></span>
 					</div>
 
@@ -56,25 +56,93 @@
 					</div>
 
 					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">
+						<button onclick="signIn()" class="login100-form-btn">
 							Sign in
 						</button>
-					</div>
-
-					<div class="flex-col-c p-t-170 p-b-40">
-						<span class="txt1 p-b-9">
-							Don’t have an account?
-						</span>
-
-						<a href="#" class="txt3">
-							Sign up now
-						</a>
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
+
 	
+	    
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/6.4.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.4.2/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.4.2/firebase-firestore.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#config-web-app -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyB1wQPRf2S0b6Z8GCxHDVOnra43bTGRr48",
+    authDomain: "cdrhack-ecfab.firebaseapp.com",
+    databaseURL: "https://cdrhack-ecfab.firebaseio.com",
+    projectId: "cdrhack-ecfab",
+    storageBucket: "",
+    messagingSenderId: "152196614868",
+    appId: "1:152196614868:web:0b68fe951618b75a"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  const auth = firebase.auth();
+
+  auth.onAuthStateChanged(user =>{
+
+      if(user){
+
+        console.log("User Logged In !!!", user)
+      } else {
+
+        console.log("User Logged Out !!!")
+      }
+
+  })
+
+  function accountCreate(){
+
+        userMail = document.getElementById("mail").value;
+        userPass = document.getElementById("pass").value;
+
+        auth.createUserWithEmailAndPassword(userMail, userPass).then(cred =>{
+
+          //console.log(cred)
+
+          document.getElementById("mail").innerText="";
+          document.getElementById("pass").innerText="";
+
+        })
+  }
+
+  function signIn(){
+
+    userMail = document.getElementById("mail").value;
+    userPass = document.getElementById("pass").value;
+
+    auth.signInWithEmailAndPassword(userMail, userPass).then(cred =>{
+
+      //console.log("Logged In !!!")
+
+    document.getElementById("mail").innerText="";
+    document.getElementById("pass").innerText="";
+
+})
+}
+
+  function logOut(){
+
+    auth.signOut().then(cred =>{
+
+    //console.log("Logged Out !!!")
+
+})
+}
+
+</script>
 	
 <!--===============================================================================================-->
 	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>

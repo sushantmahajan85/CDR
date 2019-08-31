@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>LOGIN PAGE</title>
+</head>
+
+<body> 
+    
+            <input type="email" id="mail" placeholder="YOUR EMAIL">
+            <input type="password" id="pass" placeholder="PASSWORD">
+            <button onclick="accountCreate()">CREATE ACCOUNT</button>
+            <button onclick="signIn()">LOGIN</button>
+            <button onclick="logOut()">LOG OUT</button>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/6.4.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.4.2/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/6.4.2/firebase-firestore.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#config-web-app -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyBLoDv-btGCXB8KNCko5iRT_loj8ECmAqs",
+    authDomain: "prac-78314.firebaseapp.com",
+    databaseURL: "https://prac-78314.firebaseio.com",
+    projectId: "prac-78314",
+    appId: "1:423192233837:web:8fd0324adf63a9a6"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  const auth = firebase.auth();
+
+  auth.onAuthStateChanged(user =>{
+
+      if(user){
+
+        console.log("User Logged In !!!", user)
+      } else {
+
+        console.log("User Logged Out !!!")
+      }
+
+  })
+
+  function accountCreate(){
+
+        userMail = document.getElementById("mail").value;
+        userPass = document.getElementById("pass").value;
+
+        auth.createUserWithEmailAndPassword(userMail, userPass).then(cred =>{
+
+          //console.log(cred)
+
+          document.getElementById("mail").innerText="";
+          document.getElementById("pass").innerText="";
+
+        })
+  }
+
+  function signIn(){
+
+    userMail = document.getElementById("mail").value;
+    userPass = document.getElementById("pass").value;
+
+    auth.signInWithEmailAndPassword(userMail, userPass).then(cred =>{
+
+      //console.log("Logged In !!!")
+
+    document.getElementById("mail").innerText="";
+    document.getElementById("pass").innerText="";
+
+})
+}
+
+  function logOut(){
+
+    auth.signOut().then(cred =>{
+
+    //console.log("Logged Out !!!")
+
+})
+}
+
+</script>
+
+</body>
+
+</html>
